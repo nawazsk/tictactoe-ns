@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Stage} from "react-konva";
-import {Board} from "../styled/TicTacToe";
+import {Board, Squares} from "../styled/TicTacToe";
 
 
 class TicTacToe extends Component {
@@ -10,7 +10,7 @@ class TicTacToe extends Component {
     gameState : new Array(9).fill(false),
     ownMark : "X",
     otherMark : "O",
-    gameOver : "false",
+    gameOver : false,
     yourTurn : true,
     winner : false,
     win : false
@@ -23,16 +23,23 @@ class TicTacToe extends Component {
     let size = (height < width) ? height * 0.8 : width * 0.8;
     let rows = this.state.rows;
     let unit = size / rows;
+    let coordinates = [];
+    for (let y=0; y < rows ; y++) {
+      for (let x = 0; x<rows ; x++) {
+        coordinates.push([x*unit, y*unit]);
+      }
+    }
 
     this.setState({
       size,
       rows,
-      unit
+      unit,
+      coordinates
     })
   }
 
-  move = () => {
-
+  move = (marker, index) => {
+    console.log("move", marker, index);
   }
 
   makeAiMove = () => {
@@ -51,7 +58,13 @@ class TicTacToe extends Component {
     let {
       size,
       unit,
-      rows
+      rows,
+      coordinates,
+      gameState,
+      win,
+      gameOver,
+      yourTurn,
+      ownMark
     } = this.state;
     return(
       <div>
@@ -64,7 +77,16 @@ class TicTacToe extends Component {
           rows = {rows}
           size = {size}
         />
-        {/*<Squares/>*/}
+        <Squares
+          unit = {unit}
+          coordinates = {coordinates}
+          gameState = {gameState}
+          win = {win}
+          gameOver = {gameOver}
+          yourTurn = {yourTurn}
+          ownMark = {ownMark}
+          move = {this.move}
+        />
         </Stage>
 
       </div>
