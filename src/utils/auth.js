@@ -67,6 +67,9 @@ class AuthService {
   logout = () => {
     localStorage.removeItem("idToken");
     localStorage.removeItem("exp");
-    location.reload();
+    window.location.reload();
   }
 }
+
+const auth = new AuthService();
+export default auth;
